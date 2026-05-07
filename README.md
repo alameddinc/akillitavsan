@@ -1,53 +1,83 @@
-# 🕶️ SMART RABBIT (Inspired by Pala)
+# AKILLI TAVSAN
 
 ![babayigit.png](babayigit.png)
 
-> **"We aren't here for nothing, Tough guy."**
+> **"Biz buraya boşu boşuna gelmedik, babayiğit."**
 
-The internet is a massive city, and web pages are its dark alleys. Some hide behind HTML tags, some change CSS classes daily to lose their trail, and others build JavaScript labyrinths to keep us out.
+İnternet koca bir şehir, web sayfaları da onun karanlık sokakları. Kimi HTML tag'lerinin arkasına saklanır, kimi her gün CSS class değiştirir izini kaybettirmek için, kimi de JavaScript labirentleri kurar bizi içeri sokmamak için.
 
-**We don't take off our sunglasses when we enter those labyrinths.**
-
-You see flashy designs, ads, and scrolling banners. **Only the dead see the truth.** We are here to extract the raw, cold data hidden behind the curtain.
+**Biz o labirentlere girerken gözlüğümüzü çıkarmayız.**
 
 ---
 
-## 💼 MISSION DOSSIER (Features)
+## GÖREV DOSYASI
 
-This isn't just an extension; it's a field operation. We don't just "request" data; we execute a mission.
+Manifest V3 Chrome Extension. Framework yok, bundler yok, direkt saha operasyonu. Sayfadaki veriyi 3 fazlı stratejiyle toplar, AI ile yapılandırır, masaya koyar.
 
-* **Shall I Remove My Glasses?:** Anti-bots and Cloudflare? We used to eat those for breakfast in the mountains. We don't chase selectors; we read the soul of the page with LLMs and rip the data straight from its heart.
-* **Cut the Noise:** Subscription pop-ups, cookie consents, manipulative banners... **Bedir! Shut it down!** We don't get distracted by manipulation; we stay focused on the target.
-* **Semantic Intelligence:** We don't just scrape; we execute. We interpret, categorize, and transform chaos into structured intelligence.
+### 3 Fazlı Operasyon
 
-## 🛠️ AMMUNITION CRATE (Tech Stack)
+**Faz 0 — DOM Keşif (Smart Schema Discovery)**
+Sayfadaki tekrarlayan elementleri bulur. 3-5 örnek AI'a gider, schema (field mapping) döner. Geri kalan mekanik — AI'a gerek yok. Scroll ile lazy-load içerik de yakalanır.
 
-We don't do small talk with fancy architectures; we are sharp, silent, and professional—like a bullet leaving the chamber.
+**Faz 1 — API Avlama (Mechanical Pagination)**
+Network trafiğini dinler, JSON endpoint bulur. Pagination pattern tespit eder (page/offset/cursor). Tüm sayfaları mekanik çeker, AI sadece schema için 1 kez çağrılır.
 
-* **Intelligence Unit:** TypeScript & React (Chrome Extension API)
-* **Deep Analysis:** LLM Services & Embedding Systems (Python, Node.js)
+**Faz 2 — Agent Loop (Son Çare)**
+Faz 0 ve 1 bulamazsa AI agent devreye girer. Sayfa ile etkileşime geçer — scroll, click, navigate, fetchUrl. Max 30 iterasyon, 3 ardışık boş step'te durur.
+
+### Yetenekler
+
+- **Schema Discovery**: AI tüm veriyi işlemek yerine sadece 3-5 örnek görür, mapping üretir. ~%90 token tasarrufu.
+- **Cross-Parent Pattern Detection**: Farklı carousel/container'lardaki aynı yapıdaki elementleri birleştirir.
+- **Network Intercept**: fetch/XHR monkey-patch ile tüm API trafiğini yakalar (200 request buffer).
+- **Biriktir Modu**: Farklı sayfalardaki verileri tek tabloda biriktirir. Duplicate atlar.
+- **JSON & CSV Export**: Toplanan veriyi tek tıkla indir.
+- **3 AI Provider**: OpenAI, Claude, Gemini. API key browser'da saklanır.
+
+## TEKNİK DETAY
+
+| Birim | Teknoloji |
+|-------|-----------|
+| Extension | Chrome Manifest V3, vanilla JS |
+| Content Script | DOM analiz, network intercept, sayfa aksiyonları |
+| Background | Service worker, mesaj router |
+| Side Panel | Scraping orchestrator, AI entegrasyonu, UI |
+| AI Providers | OpenAI (gpt-4o-mini), Claude (claude-sonnet-4-20250514), Gemini (gemini-2.0-flash) |
+
+## LİMİTLER
+
+| Limit | Değer |
+|-------|-------|
+| Network capture buffer | 200 request (FIFO) |
+| Request body — JSON | max 100KB |
+| Request body — diğer | max 10KB |
+| AI'a gönderilen HTML | max 50K karakter |
+| Pagination max sayfa | 50 ek sayfa |
+| Agent loop max iterasyon | 30 |
+| Scroll loop max | 50 iterasyon |
+
+## KURULUM
+
+1. Bu repoyu klonla
+2. `chrome://extensions` → Developer mode → "Load unpacked" → klasörü seç
+3. Extension ikonuna tıkla → side panel açılır
+4. Ayarlar'dan AI provider ve API key gir
+5. Hedefi yaz, "Operasyonu Başlat"
+
+## MİMARİ
+
+```
+Side Panel (sidepanel.js)
+    | chrome.runtime.sendMessage()
+Background Service Worker (background.js)
+    | chrome.tabs.sendMessage()
+Content Script (content.js)
+    | sendResponse()
+(Yanıt aynı zincirden geri döner)
+```
 
 ---
 
-## 🎯 CODESNIPE: EXECUTING CODE, NOT DRAMA
+> **"Sayfayı okuduk, çıkıyoruz."**
 
-> **"Don't read me a 500-line tutorial. Give me the 12 lines that work and get out."**
-
-The internet is a swamp filled with broken StackOverflow answers and "spaghetti" code written by those who think they’re geniuses. **CodeSnipe** is not for those who talk big at the table; it’s for those who pull the trigger in the field.
-
-* **Precision Strike:** No long-winded tutorials. Just pure, 12-line solutions tested in production with blood and sweat during sleepless nights.
-* **Gear Box:** From architectural insights to the most notorious Regex patterns, SQL queries, and DevOps scripts... Take it, deploy it, finish the job.
-
----
-
-### 🧥 A FINAL WORD TO SITE OWNERS
-
-We came down from the mountains to the code. If you see our footprints in your traffic logs, don't bother changing your scripts. Locking the doors only extends our coffee break. That data will end up in our table eventually.
-
-Why?
-**Because some rabbits don't like carrots. They love data.**
-
-**"Shut it down... We read the page, we're heading out."**
-
----
-*If you don't know, you aren't a webmaster.*
+*Bazı tavşanlar havuç sevmez. Onlar veri sever.*
