@@ -1,70 +1,70 @@
-# AKILLI TAVSAN
+# SMART RABBIT (AKILLI TAVŞAN)
 
 ![babayigit.png](babayigit.png)
 
-> **"Biz buraya boşu boşuna gelmedik, babayiğit."**
+> **"We didn't come here for nothing, tough guy."**
 
-İnternet koca bir şehir, web sayfaları da onun karanlık sokakları. Kimi HTML tag'lerinin arkasına saklanır, kimi her gün CSS class değiştirir izini kaybettirmek için, kimi de JavaScript labirentleri kurar bizi içeri sokmamak için.
+The internet is a massive city, and web pages are its dark alleys. Some hide behind HTML tags, some change CSS classes daily to lose their trail, and others build JavaScript labyrinths to keep us out.
 
-**Biz o labirentlere girerken gözlüğümüzü çıkarmayız.**
+**We don't take off our sunglasses when we enter those labyrinths.**
 
 ---
 
-## GÖREV DOSYASI
+## MISSION DOSSIER
 
-Manifest V3 Chrome Extension. Framework yok, bundler yok, direkt saha operasyonu. Sayfadaki veriyi 3 fazlı stratejiyle toplar, AI ile yapılandırır, masaya koyar.
+Manifest V3 Chrome Extension. No frameworks, no bundlers—pure field operation. It gathers data using a 3-phase strategy, structures it with AI, and puts it on the table.
 
-### 3 Fazlı Operasyon
+### 3-Phase Operation
 
-**Faz 0 — DOM Keşif (Smart Schema Discovery)**
-Sayfadaki tekrarlayan elementleri bulur. 3-5 örnek AI'a gider, schema (field mapping) döner. Geri kalan mekanik — AI'a gerek yok. Scroll ile lazy-load içerik de yakalanır.
+**Phase 0 — DOM Recon (Smart Schema Discovery)**
+Identifies repeating elements on the page. Sends 3-5 examples to the AI, which returns the schema (field mapping). The rest is mechanical—no further AI needed. Also captures lazy-loaded content via scrolling.
 
-**Faz 1 — API Avlama (Mechanical Pagination)**
-Network trafiğini dinler, JSON endpoint bulur. Pagination pattern tespit eder (page/offset/cursor). Tüm sayfaları mekanik çeker, AI sadece schema için 1 kez çağrılır.
+**Phase 1 — API Hunting (Mechanical Pagination)**
+Monitors network traffic to find JSON endpoints. Detects pagination patterns (page/offset/cursor). Fetches all pages mechanically; AI is only called once for the schema.
 
-**Faz 2 — Agent Loop (Son Çare)**
-Faz 0 ve 1 bulamazsa AI agent devreye girer. Sayfa ile etkileşime geçer — scroll, click, navigate, fetchUrl. Max 30 iterasyon, 3 ardışık boş step'te durur.
+**Phase 2 — Agent Loop (Last Resort)**
+If Phases 0 and 1 fail, the AI agent takes over. It interacts with the page—scrolling, clicking, navigating, and fetching URLs. Max 30 iterations; stops after 3 consecutive empty steps.
 
-### Yetenekler
+### Capabilities
 
-- **Schema Discovery**: AI tüm veriyi işlemek yerine sadece 3-5 örnek görür, mapping üretir. ~%90 token tasarrufu.
-- **Cross-Parent Pattern Detection**: Farklı carousel/container'lardaki aynı yapıdaki elementleri birleştirir.
-- **Network Intercept**: fetch/XHR monkey-patch ile tüm API trafiğini yakalar (200 request buffer).
-- **Biriktir Modu**: Farklı sayfalardaki verileri tek tabloda biriktirir. Duplicate atlar.
-- **JSON & CSV Export**: Toplanan veriyi tek tıkla indir.
-- **3 AI Provider**: OpenAI, Claude, Gemini. API key browser'da saklanır.
+- **Schema Discovery**: Instead of processing all data, the AI only sees 3-5 examples to produce a mapping. ~90% token savings.
+- **Cross-Parent Pattern Detection**: Merges elements with the same structure even if they are in different carousels or containers.
+- **Network Intercept**: Captures all API traffic via fetch/XHR monkey-patching (200 request buffer).
+- **Accumulate Mode**: Collects data from different pages into a single table. Automatically skips duplicates.
+- **JSON & CSV Export**: Download the collected data with a single click.
+- **3 AI Providers**: OpenAI, Claude, Gemini. API keys are stored locally in the browser.
 
-## TEKNİK DETAY
+## TECHNICAL DETAILS
 
-| Birim | Teknoloji |
+| Unit | Technology |
 |-------|-----------|
-| Extension | Chrome Manifest V3, vanilla JS |
-| Content Script | DOM analiz, network intercept, sayfa aksiyonları |
-| Background | Service worker, mesaj router |
-| Side Panel | Scraping orchestrator, AI entegrasyonu, UI |
+| Extension | Chrome Manifest V3, Vanilla JS |
+| Content Script | DOM analysis, network intercept, page actions |
+| Background | Service worker, message router |
+| Side Panel | Scraping orchestrator, AI integration, UI |
 | AI Providers | OpenAI (gpt-4o-mini), Claude (claude-sonnet-4-20250514), Gemini (gemini-2.0-flash) |
 
-## LİMİTLER
+## LIMITS
 
-| Limit | Değer |
+| Limit | Value |
 |-------|-------|
-| Network capture buffer | 200 request (FIFO) |
+| Network capture buffer | 200 requests (FIFO) |
 | Request body — JSON | max 100KB |
-| Request body — diğer | max 10KB |
-| AI'a gönderilen HTML | max 50K karakter |
-| Pagination max sayfa | 50 ek sayfa |
-| Agent loop max iterasyon | 30 |
-| Scroll loop max | 50 iterasyon |
+| Request body — other | max 10KB |
+| HTML sent to AI | max 50K characters |
+| Max pagination | 50 additional pages |
+| Max agent loop iterations | 30 |
+| Max scroll loop | 50 iterations |
 
-## KURULUM
+## INSTALLATION
 
-1. Bu repoyu klonla
-2. `chrome://extensions` → Developer mode → "Load unpacked" → klasörü seç
-3. Extension ikonuna tıkla → side panel açılır
-4. Ayarlar'dan AI provider ve API key gir
-5. Hedefi yaz, "Operasyonu Başlat"
+1. Clone this repository.
+2. Go to `chrome://extensions` → Enable Developer mode → Click "Load unpacked" → Select the folder.
+3. Click the extension icon → The side panel opens.
+4. Enter your AI provider and API key in Settings.
+5. Enter the target, and "Start Operation."
 
-## MİMARİ
+## ARCHITECTURE
 
 ```
 Side Panel (sidepanel.js)
@@ -73,11 +73,14 @@ Background Service Worker (background.js)
     | chrome.tabs.sendMessage()
 Content Script (content.js)
     | sendResponse()
-(Yanıt aynı zincirden geri döner)
+(The response returns through the same chain)
 ```
 
 ---
 
-> **"Sayfayı okuduk, çıkıyoruz."**
+> **"We read the page, we're heading out."**
 
-*Bazı tavşanlar havuç sevmez. Onlar veri sever.*
+*Some rabbits don't like carrots. They love data.*
+
+---
+**Disclaimer:** *The tone of this documentation is a satirical tribute to the character "Pala" from the Turkish cult TV series "Valley of the Wolves" (Kurtlar Vadisi).*
